@@ -32,8 +32,7 @@
          translated-house (t/translate-house config house [:title [:details :station] [:details :location]])
          view (view/house-view translated-house)]
      [{:chat-id chat-id :text view :parse-mode "HTML" :type :message}
-      (merge {:chat-id chat-id :type :location} coords)])
-   ))
+      (merge {:chat-id chat-id :type :location} coords)])))
 
 (defmethod handle-command :default
   ([{:keys [chat-id]} _]

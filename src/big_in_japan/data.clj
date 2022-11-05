@@ -23,7 +23,9 @@
       (let [pref (a/<! pref-chan)]
         (if (nil? pref)
           result
-          (recur (merge result pref)))))))
+          (recur (concat result pref)))))))
+
+#_(count (a/<!! (get-prefectures-range (conf/prefecture-url conf/config) [45 46])))
 
 (defn get-and-save-prefecture [url pref-num db-uri]
   (let [prefecture (ah/get-athome-by-prefecture url pref-num {:location distance-filters :price 5000000})
