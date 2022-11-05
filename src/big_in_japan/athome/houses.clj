@@ -100,9 +100,10 @@
 #_(get-athome-telework [])
 
 (defn get-athome-by-prefecture
-  [url prefecture filters]
-  (let [houses (parse-houses (athome-houses-hickory
-                               (str url prefecture)))
-        filtered-houses (apply-filters houses filters)]
-    filtered-houses))
+  ([url prefecture] (parse-houses (athome-houses-hickory (str url prefecture))))
+  ([url prefecture filters]
+   (let [houses (parse-houses (athome-houses-hickory
+                                (str url prefecture)))
+         filtered-houses (apply-filters houses filters)]
+     filtered-houses)))
 #_(get-athome-by-prefecture 46 [])

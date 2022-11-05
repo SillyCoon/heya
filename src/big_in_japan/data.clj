@@ -10,9 +10,6 @@
           {:id [:bus-stop :foot] :value 20 :unit :minutes}
           {:id [:ride] :value 20 :unit :minutes}])
 
-#_(count (ah/get-athome-by-prefecture 46 {:location distance-filters}))
-#_(count (ah/get-athome-by-prefecture 46 {:location distance-filters :price 5000000}))
-
 (defn get-prefecture [url prefecture]
   (a/thread
     (ah/get-athome-by-prefecture

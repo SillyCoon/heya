@@ -1,14 +1,8 @@
-(ns big-in-japan.core
-  (:require [big-in-japan.long-polling :refer [run-polling]] )
-  (:require [cprop.core :refer [load-config]]))
+(ns big-in-japan.core)
 
-(def -config (load-config))
 
-#_ (house-view
-  (translate-house (first (get-athome-houses-mem))
-                   [:title
-                    [:details :location]
-                    [:details :station]]))
+;(def ch (get-prefectures-range (by-prefecture-url -config) [43 44 45 46]))
+;(async/<!! ch)
 
 
 #_(run-polling -config)
