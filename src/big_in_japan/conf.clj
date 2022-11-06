@@ -3,5 +3,6 @@
 
 (def config (load-config))
 
-(defn prefecture-url [config]
-  (-> config :houses :prefecture-url))
+(defn prefecture-url [config] (-> config :houses :prefecture-url))
+
+(defn db-uri [config] (-> config :db :uri))
