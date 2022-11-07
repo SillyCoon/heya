@@ -1,13 +1,16 @@
 (ns big-in-japan.utils
   (:require [org.httpkit.client :as client])
   (:require [hickory.select :as s])
-  (:require [hickory.core :as hc]))
+  (:require [hickory.core :as hc]
+            [clojure.string :as str]))
 
-(defn parse-response [resp]
-  (-> resp :body hc/parse hc/as-hickory))
+(defn parse-response [{:keys [status body error]}]
+  (if-not error
+    (-> body hc/parse hc/as-hickory)
+    (throw (ex-info "HTML GET error" {:status status :error error}))))
 
 (defn get-hickory
-  ([url] (-> @(client/request {:url url}) parse-response))
+  ([url] (-> @(client/request {:url url :connect-timeout 600000 :idle-timeout 600000}) parse-response))
   ([url params] (-> @(client/request {:url url :query-params params}) parse-response)))
 
 (defn select-houses [house-class hickory-html]
@@ -32,7 +35,7 @@
 #_(load-offset offset-file)
 
 (defn mans-to-number [mans]
-  (try (-> (clojure.string/replace mans #"[\.,]" "")
+  (try (-> (str/replace mans #"[\.,]" "")
       Integer/parseInt
       (* 10000))
        (catch NumberFormatException _ mans)))
