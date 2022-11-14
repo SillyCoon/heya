@@ -11,11 +11,15 @@
 (defn save-houses [db houses]
   (when (seq houses)
     (mc/insert-batch db "houses" houses)))
-
-
 (defn connect [uri]
   (mg/connect-via-uri uri))
 (defn disconnect [connection]
   (mg/disconnect connection))
+
+(defn connect-and-save-houses [uri houses]
+  (when (seq houses)
+    (let [{:keys [conn db]} (connect uri)]
+      (save-houses db houses)
+      (disconnect conn))))
 
 #_(test-houses (conf/db-uri conf/config))

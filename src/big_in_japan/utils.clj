@@ -10,7 +10,7 @@
     (throw (ex-info "HTML GET error" {:status status :error error}))))
 
 (defn get-hickory
-  ([url] (-> @(client/request {:url url :connect-timeout 600000 :idle-timeout 600000}) parse-response))
+  ([url] (-> @(client/request {:url url :connect-timeout 6000000 :idle-timeout 6000000}) parse-response))
   ([url params] (-> @(client/request {:url url :query-params params}) parse-response)))
 
 (defn select-houses [house-class hickory-html]
