@@ -5,10 +5,11 @@
             :url  "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [org.clojure/tools.logging "1.2.4"]
-                 [org.clojure/core.async "1.5.648"]
+                 [org.clojure/core.async "1.6.673"]
                  [http-kit "2.6.0"]
                  [hickory "0.7.1"]
                  [cheshire "5.11.0"]
                  [com.novemberain/monger "3.5.0"]
-                 [cprop "0.1.19"]]
+                 [cprop "0.1.19"]
+                 [compojure "1.7.0"]]
   :repl-options {:init-ns big-in-japan.core})
