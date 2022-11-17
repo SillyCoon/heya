@@ -1,16 +1,16 @@
 (ns big-in-japan.storage
   (:require [monger.collection :as mc]
-            [monger.core :as mg])
-  (:require [big-in-japan.conf :as conf]))
-
-(defn test-houses [mongo-uri]
-  (let [{:keys [conn db]} (mg/connect-via-uri mongo-uri)]
-    (mc/insert-and-return db "houses" {:name "John" :age 30})
-    (mg/disconnect conn)))
+            [monger.core :as mg]
+            [big-in-japan.conf :as conf]
+            [clojure.tools.logging :as log]))
 
 (defn save-houses [db houses]
   (when (seq houses)
     (mc/insert-batch db "houses" houses)))
+
+(defn get-houses [db]
+  (mc/count db "houses"))
+
 (defn connect [uri]
   (mg/connect-via-uri uri))
 (defn disconnect [connection]
@@ -22,4 +22,13 @@
       (save-houses db houses)
       (disconnect conn))))
 
-#_(test-houses (conf/db-uri conf/config))
+(defn with-mongo [uri fn]
+  (let [{:keys [conn db]} (connect uri)]
+    (try
+      (fn db)
+      (catch Exception e
+        (log/error "Error during mongo operation" (.getMessage e)))
+      (finally (disconnect conn)))))
+
+
+#_(with-mongo (conf/db-uri conf/config) get-houses)
