@@ -1,9 +1,11 @@
 (ns big-in-japan.server
   (:require [org.httpkit.server :as server]
-            [compojure.core :refer [defroutes GET]]))
+            [compojure.core :refer [defroutes GET] :as compojure]))
 
-(defroutes routes
-  (GET "/" [] (fn [request] {:code 200 :body "Sooka"})))
+(defroutes api-routes
+           (compojure/context "/api/v1" []
+             (GET "/processing" [] (fn [_] {:code 200 :body "Processing..."}))
+             (GET "/health" [] (fn [_] {:code 200 :body "Healthy"}))))
 
 (defonce http-server (atom nil))
 
@@ -14,4 +16,4 @@
 
 #_(stop-server)
 
-#_(reset! http-server (server/run-server #'routes {:port 9999}))
+#_(reset! http-server (server/run-server #'api-routes {:port 9999}))
