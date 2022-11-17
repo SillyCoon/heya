@@ -11,7 +11,7 @@
 
 (defn get-hickory
   ([url] (-> @(client/request {:url url :connect-timeout 6000000 :idle-timeout 6000000}) parse-response))
-  ([url params] (-> @(client/request {:url url :query-params params}) parse-response)))
+  ([url params] (-> @(client/request {:url url :query-params params :connect-timeout 6000000 :idle-timeout 6000000}) parse-response)))
 
 (defn select-houses [house-class hickory-html]
   (s/select (s/class house-class) hickory-html))
